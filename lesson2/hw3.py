@@ -1,6 +1,6 @@
 
 while True:
-        user_input_n1 = input("Еnter the number1: ")
+        user_input_n1 = input("Еnter the number: ")
     
         try:
             user_input_n1 = float(user_input_n1)
@@ -24,7 +24,7 @@ while True:
         break
 
     while True:
-        user_input_n2 = input("Еnter the number2: ")
+        user_input_n2 = input("Еnter the number: ")
     
         try:
             user_input_n2 = float(user_input_n2)
