@@ -1,6 +1,7 @@
 
 
 def normalize(string):
+    
     legend = {
     ord('а'):'a',
     ord('б'):'b',
@@ -95,5 +96,5 @@ def normalize(string):
     return result_string
 
 
-new_string = normalize(input("Input sttring: "))
+new_string = normalize(input("Input string: "))
 print(new_string)
