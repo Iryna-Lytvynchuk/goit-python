@@ -1,9 +1,17 @@
+import glob
 import logging
 import os
-from pathlib import Path
+import pathlib
 import sys
-from shutil import move
-from shutil import unpack_archive
+import shutil
+
+
+video_folder = {".avi" : "Видео/", ".mov" : "Видео/", ".mp4" : "Видео/"}
+music_folder = {".mp3" : "Музыка/", ".ogg": "Музыка/", ".arm" : "Музыка/", ".wav" : "Музыка/"}
+pic_folder = {".jpg" : "Изображения/", ".png" : "Изображения/", ".jpeg" : "Изображения/"}
+doc_folder = {".doc" : "Документы/", ".docx" : "Документы/", ".txt" : "Документы/", ".pdf" : "Документы/"}
+archives_folder = {".rar" : "Архив/", ".zip" : "Архив/"}
+archives_types = ('*.rar', '*.zip')
 
 def normalize(string):
     legend = {
@@ -98,68 +106,76 @@ def normalize(string):
     result_string = str.translate(string, legend)
     return result_string
 
-def drop_empty_folders(directory):
 
-    for dirpath, dirnames, filenames in os.walk(directory, topdown=False):
+def arhive(path):
+
+    for files in archives_types:
+        arh_files = pathlib.Path(path + "\\" + 'Archives').rglob(files)
+
+    while True:
+        try:
+            path_arh = next(arh_files)
+        except StopIteration:
+            break
+        except PermissionError:
+            logging.exception("permission error")
+        else:
+            extract_dir = path_arh.with_name(path_arh.stem)
+            shutil.unpack_archive(str(path_arh), str(extract_dir), "zip" or "rar")
+
+
+def drop_empty_folders(path):
+
+    for dirpath, dirnames, filenames in os.walk(path, topdown=False):
         if not dirnames and not filenames:
             os.rmdir(dirpath)
 
-video_folder = {".avi" : "Видео/", ".mov" : "Видео/", ".mp4" : "Видео/"}
-music_folder = {".mp3" : "Музыка/", ".ogg": "Музыка/", ".arm" : "Музыка/", ".wav" : "Музыка/"}
-pic_folder = {".jpg" : "Изображения/", ".png" : "Изображения/", ".jpeg" : "Изображения/"}
-doc_folder = {".doc" : "Документы/", ".docx" : "Документы/", ".txt" : "Документы/", ".pdf" : "Документы/"}
-archives_folder = {".rar" : "Архив/", ".zip" : "Архив/"}
 
-path = r"C:\F1"
-zip_files = Path(r"C:\F1\Archives").rglob("*.zip")
-files = os.listdir(path)
+def main():
+    path = r"C:\F1"
+    dirs = os.walk(path)
 
-for music_format in music_folder:
-    for name_file in files:
-        if name_file.endswith(music_format):
-            result = name_file.split(str(music_format), 1)
-            os.makedirs(path + "\\" + 'Music', exist_ok=True)
-            move(path + "\\" + result[0] + music_format, path + "\\" + "Music" + "\\" + normalize(result[0]) + music_format)
-        
-for pic_format in pic_folder:
-    for name_file in files:
-        if name_file.endswith(pic_format):
-            result = name_file.split(str(pic_format), 1)
-            os.makedirs(path + "\\" + 'Pictures', exist_ok=True)
-            move(path + "\\" + result[0] + pic_format, path + "\\" + "Pictures" + "\\" + normalize(result[0]) + pic_format)
+    for path_from_top, subdirs, files_dirs in dirs:
+        for name_file in files_dirs:
+            for music_format in music_folder:
+                if name_file.endswith(music_format):
+                    os.makedirs(path + "\\" + 'Music', exist_ok=True)
+                    shutil.move(path_from_top + "\\" + name_file, path + "\\" + 'Music'+ "\\" + normalize(name_file))
+                else:
+                    continue
 
-for doc_format in doc_folder:
-    for name_file in files:
-        if name_file.endswith(doc_format):
-            result = name_file.split(str(doc_format), 1)
-            os.makedirs(path + "\\" + 'Documents', exist_ok=True)
-            move(path + "\\" + result[0] + doc_format, path + "\\" + "Documents" + "\\" + normalize(result[0]) + doc_format)
+            for pic_format in pic_folder:
+                if name_file.endswith(pic_format):
+                    os.makedirs(path + "\\" + 'Pictures', exist_ok=True)
+                    shutil.move(path_from_top + "\\" + name_file, path + "\\" + 'Pictures'+ "\\" + normalize(name_file))
+                else:
+                    continue       
 
-for video_format in video_folder:
-    for name_file in files:
-        if name_file.endswith(video_format):
-            result = name_file.split(str(video_format), 1)
-            os.makedirs(path + "\\" + 'Video', exist_ok=True)
-            move(path + "\\" + result[0] + video_format, path + "\\" + "Video" + "\\" + normalize(result[0]) + video_format)            
+            for doc_format in doc_folder:
+                if name_file.endswith(doc_format):
+                    os.makedirs(path + "\\" + 'Documents', exist_ok=True)
+                    shutil.move(path_from_top + "\\" + name_file, path + "\\" + 'Documents'+ "\\" + normalize(name_file))
+                else:
+                    continue
 
-for archives_format in archives_folder:
-    for name_file in files:
-        if name_file.endswith(archives_format):
-            result = name_file.split(str(archives_format), 1)
-            os.makedirs(path + "\\" + 'Archives', exist_ok=True)
-            move(path + "\\" + result[0] + archives_format, path + "\\" + "Archives" + "\\" + normalize(result[0]) + archives_format)
+            for video_format in video_folder:
+                if name_file.endswith(video_format):
+                    os.makedirs(path + "\\" + 'Video', exist_ok=True)
+                    shutil.move(path_from_top + "\\" + name_file, path + "\\" + 'Video'+ "\\" + normalize(name_file))
+                else:
+                    continue
+
+            for archives_format in archives_folder:
+                if name_file.endswith(archives_format):
+                    os.makedirs(path + "\\" + 'Archives', exist_ok=True)
+                    shutil.move(path_from_top + "\\" + name_file, path + "\\" + 'Archives'+ "\\" + normalize(name_file))
+                else:
+                    continue                    
+    
+    arhive(path)
+    
+    drop_empty_folders(path)
 
 
-while True:
-    try:
-        path = next(zip_files)
-    except StopIteration:
-        break
-    except PermissionError:
-        logging.exception("permission error")
-    else:
-         extract_dir = path.with_name(path.stem)
-         unpack_archive(str(path), str(extract_dir), 'zip')
-
-drop_empty_folders(r"C:\F1")
-
+if __name__ == "__main__":
+    main() 
