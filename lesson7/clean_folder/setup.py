@@ -6,7 +6,7 @@ setup(
     version='1.0.0',
     description='Very useful clean code',
     url='https://github.com/Iryna-Lytvynchuk/goit-python',
-    author='Lytvynchuk Irina',
+    author='Lytvynchuk Iryna',
     author_email='irinalytvinchuks@gmail.com',
     license='MIT',
     packages=find_packages(),
