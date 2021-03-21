@@ -31,7 +31,7 @@ class Phone(Field):
     @phone.setter
     def phone(self, value):
         if len(value) != 10:
-            raise Exception('Entered incorrectly')
+            raise Exception('Entered incorrectly (need 10 simbols)')
         self.__phone = value
 
 class Birthday:
@@ -50,7 +50,7 @@ class Birthday:
     @birthday.setter
     def birthday(self, value):
         if not (re.match(r'\d{4}/\d{2}/\d{2}', value)):
-            raise Exception('Entered incorrectly')
+            raise Exception('Entered incorrectly (YYYY/MM/DD)')
         self.__birthday = value
 
 class AddressBook(UserDict):
