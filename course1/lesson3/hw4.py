@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -30,7 +29,7 @@ for file in files:
         others.append(file)
 
     extension = file.split(".")
-    extension_с.append(extension[1])
+    extension_с.append(extension[-1])
     
 print(f'Музыка: {musics}')   
 print(f'Видео: {videos}')

@@ -132,7 +132,7 @@ def drop_empty_folders(path):
 
 
 def main():
-    path = r"C:\F1"
+    path = r"C:\Users\Iryna\Desktop\project-Python-GOIT"
     dirs = os.walk(path)
 
     for path_from_top, subdirs, files_dirs in dirs:
