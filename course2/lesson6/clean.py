@@ -2,7 +2,7 @@ import asyncio
 from aiopath import AsyncPath
 import concurrent.futures
 import os
-import pathlib
+
 import shutil
 import time
 
