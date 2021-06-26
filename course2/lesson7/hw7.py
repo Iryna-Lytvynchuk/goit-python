@@ -51,6 +51,7 @@ if __name__ == "__main__":
 
         server = threading.Thread(target=echo_server, args=(HOST, PORT))
         client = threading.Thread(target=simple_client, args=(HOST, PORT, MESSAGE))
+        
 
         server.start()
         client.start()
