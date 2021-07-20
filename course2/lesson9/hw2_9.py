@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import select
 
 
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('sqlite:///alembic_db.sql', echo=True)
 
 metadata = MetaData()
 

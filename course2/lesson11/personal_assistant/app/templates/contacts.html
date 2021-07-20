@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+</head>
+<body>
+    {% for contacts in contacts %}
+    <div> <span><h1>Name: {{ contacts.name }}</h1></span></div>
+	<div> <span><h1>Surname: {{ contacts.surname }}</h1></span></div>
+	<div> <span><h1>Address: {{ contacts.adress }}</h1></span></div>
+	<div> <span><h1>Note: {{ contacts.note}}</h1></span></div>
+	<div> <span><h1>Tag: {{ contacts.tag }}</h1></span></div>
+	<div> <span><h1>Email: {{ contacts.email }}</h1></span></div>
+	<div> <span><h1>Phone: {{ contacts.phone }}</h1></span></div>
+	<div> <span><h1>Birthday: {{ contacts.birthday }}</h1></span></div>
+    {% endfor %}
+</body>
+</html>
