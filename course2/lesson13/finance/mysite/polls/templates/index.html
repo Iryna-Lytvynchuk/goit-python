@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="container">
+    <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Введите дату</label><br>
+            <input type="text" name="data_income" />
+        </p>
+        <p>
+            <label>Введите сумму</label><br>
+            <input type="number" name="amount" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+    
+</body>
+</html>
