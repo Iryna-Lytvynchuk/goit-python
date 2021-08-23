@@ -1,11 +1,21 @@
 import scrapy
-from test_spyder.items import QuotesToscrapeItem
+from test_spyder.test_spyder.items import QuotesToscrapeItem
 
 class QuotesSpider(scrapy.Spider):
     name = 'authors'
     allowed_domains = ['quotes.toscrape.com']
-    start_urls = ['http://quotes.toscrape.com/']
-    base_url = 'http://quotes.toscrape.com/'
+    #start_urls = ['http://quotes.toscrape.com/']
+    #base_url = 'http://quotes.toscrape.com/'
+
+    base_url = ''
+    start_urls = []
+    def __init__(self, category='', **kwargs):
+        self.base_url = category
+        self.start_urls.append(self.base_url)
+        super().__init__(**kwargs)
+
+    custom_settings = {'FEED_URI': 'tutorial/outputfile.json', 'CLOSESPIDER_TIMEOUT' : 15}
+
 
     def parse(self, response):
         node_list = response.xpath('//div[@class="quote"]')
