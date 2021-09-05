@@ -21,7 +21,7 @@ migrate = Migrate(app, db)
 
 output_data = []
 crawl_runner = CrawlerRunner()
-
+print(output_data)
 
 @app.route('/')
 def index():
